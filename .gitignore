@@ -1,0 +1,38 @@
+## bin, obj, build output
+bin/
+obj/
+out/
+[Dd]ebug/
+[Rr]elease/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio / Rider
+.vs/
+.idea/
+*.DotSettings.user
+
+## NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+
+## Logs
+*.log
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Environment & secrets
+.env
+appsettings.Local.json
+appsettings.*.local.json
+
+## EF Core
+**/Migrations/*.Designer.cs.bak

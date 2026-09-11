@@ -1,0 +1,67 @@
+@EmployeeManagementSystem.Api_HostAddress = http://localhost:5175
+
+### Get all departments
+GET {{EmployeeManagementSystem.Api_HostAddress}}/api/departments
+Accept: application/json
+
+### Get department by ID
+GET {{EmployeeManagementSystem.Api_HostAddress}}/api/departments/1
+Accept: application/json
+
+### Create department
+POST {{EmployeeManagementSystem.Api_HostAddress}}/api/departments
+Content-Type: application/json
+
+{
+  "name": "Marketing",
+  "description": "Marketing and communications"
+}
+
+### Get all employees
+GET {{EmployeeManagementSystem.Api_HostAddress}}/api/employees
+Accept: application/json
+
+### Get employees by department
+GET {{EmployeeManagementSystem.Api_HostAddress}}/api/employees?departmentId=2
+Accept: application/json
+
+### Get active employees only
+GET {{EmployeeManagementSystem.Api_HostAddress}}/api/employees?isActive=true
+Accept: application/json
+
+### Get employee by ID
+GET {{EmployeeManagementSystem.Api_HostAddress}}/api/employees/1
+Accept: application/json
+
+### Create employee
+POST {{EmployeeManagementSystem.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Brown",
+  "email": "alice.brown@company.com",
+  "phone": "+62-812-1111-2222",
+  "hireDate": "2024-06-01",
+  "salary": 7800000,
+  "isActive": true,
+  "departmentId": 2
+}
+
+### Update employee
+PUT {{EmployeeManagementSystem.Api_HostAddress}}/api/employees/1
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@company.com",
+  "phone": "+62-812-3456-7890",
+  "hireDate": "2022-03-15",
+  "salary": 9000000,
+  "isActive": true,
+  "departmentId": 2
+}
+
+### Delete employee
+DELETE {{EmployeeManagementSystem.Api_HostAddress}}/api/employees/3
