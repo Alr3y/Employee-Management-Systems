@@ -1,8 +1,9 @@
 using EmployeeManagementSystem.Api.Data;
 using EmployeeManagementSystem.Api.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,33 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Employee Management System API",
         Version = "v1",
         Description = "REST API for managing employees and departments with PostgreSQL"
+    });
+
+    // definisi security scheme untuk JWT
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Masukkan token JWT dengan format: Bearer {token}"
+    });
+
+    // requirement supaya semua endpoint bisa pakai Authorize
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
     });
 });
 

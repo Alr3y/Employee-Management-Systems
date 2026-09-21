@@ -1,11 +1,13 @@
 using EmployeeManagementSystem.Api.DTOs;
 using EmployeeManagementSystem.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class EmployeesController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
@@ -15,6 +17,7 @@ public class EmployeesController : ControllerBase
         _employeeService = employeeService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetAll(
         [FromQuery] int? departmentId,
@@ -24,6 +27,7 @@ public class EmployeesController : ControllerBase
         return Ok(employees);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<EmployeeDto>> GetById(int id)
     {

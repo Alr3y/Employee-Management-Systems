@@ -48,7 +48,8 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Name, user.Username)
         };
         if (!string.IsNullOrEmpty(user.Role))
-            claims.Add(new Claim(ClaimTypes.Role, user.Role));
+            claims.Add(new Claim(ClaimTypes.Name, user.Username));
+        claims.Add(new Claim(ClaimTypes.Role, user.Role));
 
         var expires = DateTime.UtcNow.AddMinutes(expiresMinutes);
 

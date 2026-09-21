@@ -8,9 +8,13 @@ namespace EmployeeManagementSystem.Api.Services;
 public interface IDepartmentService
 {
     Task<IEnumerable<DepartmentDto>> GetAllAsync();
+
     Task<DepartmentDto?> GetByIdAsync(int id);
+
     Task<DepartmentDto> CreateAsync(CreateDepartmentDto dto);
+
     Task<DepartmentDto?> UpdateAsync(int id, UpdateDepartmentDto dto);
+
     Task<bool> DeleteAsync(int id);
 }
 
@@ -25,15 +29,29 @@ public class DepartmentService : IDepartmentService
 
     public async Task<IEnumerable<DepartmentDto>> GetAllAsync()
     {
-        return await _context.Departments
-            .AsNoTracking()
-            .Select(d => new DepartmentDto(
-                d.Id,
-                d.Name,
-                d.Description,
-                d.Employees.Count))
-            .OrderBy(d => d.Name)
-            .ToListAsync();
+        //return await _context.Departments
+        //    .Include(d => d.Employees)
+        //    .AsNoTracking()
+        //    .Select(d => new DepartmentDto(
+        //        d.Id,
+        //        d.Name,
+        //        d.Description,
+        //        d.Employees.Count))
+        //    .OrderBy(d => d.Name)
+        //    .ToListAsync();
+        var departments = await _context.Departments
+     .AsNoTracking()
+     .Select(d => new
+     {
+         d.Id,
+         d.Name,
+         d.Description,
+         EmployeeCount = _context.Employees.Count(e => e.DepartmentId == d.Id)
+     })
+     .OrderBy(x => x.Name)
+     .ToListAsync();
+
+        return departments.Select(x => new DepartmentDto(x.Id, x.Name, x.Description, x.EmployeeCount));
     }
 
     public async Task<DepartmentDto?> GetByIdAsync(int id)
