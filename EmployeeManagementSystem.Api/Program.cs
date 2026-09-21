@@ -24,7 +24,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>(); // Registrasi service ke DI container
+// Kalau mau testing, bisa diganti dengan MockAuthService
+// builder.Services.AddScoped<IAuthService, MockAuthService>();
 
 builder.Services.AddCors(options =>
 {
